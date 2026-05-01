@@ -40,3 +40,34 @@ def answer_question(context: str, question: str):
     )
 
     return response.choices[0].message.content
+
+def classify_intent(user_input: str):
+    response = client.chat.completions.create(
+        model="gpt-4.1-mini",
+        temperature=0.3,
+        messages=[
+            {
+                "role": "system",
+                "content": """Classify the user request into one of these:
+                - summarize
+                - grammar
+                - question
+
+                Respond with ONLY the category name."""
+            },
+            {"role": "user", "content": user_input}
+        ]
+    )
+    return response.choices[0].message.content.strip().lower()
+
+def process_input(user_input: str):
+    intent = classify_intent(user_input)
+
+    if intent == "summarize":
+        return {"type": "summary", "result": summarize_text(user_input)}
+    elif intent == "grammar":
+        return {"type": "grammar", "result": improve_grammar(user_input)}
+    elif intent == "question":
+        return {"type": "question", "result": answer_question(user_input, user_input)}
+    else:
+        return {"type": "unknown", "result": "Couldn't determine intent"}
