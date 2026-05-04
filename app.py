@@ -65,14 +65,18 @@ def ask(req: QARequest ):
 @app.post("/process")
 def process(req: ProcessRequest):
     try:
-        result = process_input(req.input)
+        result = process_input(req.input, req.session_id, req.context)
         return {
             "status": "success",
             "data": result
         }
     except Exception as e:
-        logger.error("Failed to process request")
+        logger.error(f"Failed to process request due to error {str(e)}")
         return {
             "status": "error",
-            "message": "Processing failed"
+            "message": f"Processing failed with error {str(e)}"
         }
+    
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1",port=8000)

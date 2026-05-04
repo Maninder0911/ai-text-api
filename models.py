@@ -10,3 +10,5 @@ class QARequest(BaseModel):
 
 class ProcessRequest(BaseModel):
     input: str
+    session_id: str
+    context: str
