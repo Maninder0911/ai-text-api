@@ -65,7 +65,7 @@ def ask(req: QARequest ):
 @app.post("/process")
 def process(req: ProcessRequest):
     try:
-        result = process_input(req.input, req.session_id, req.context)
+        result = process_input(user_input=req.input, session_id=req.session_id, context=req.context)
         return {
             "status": "success",
             "data": result

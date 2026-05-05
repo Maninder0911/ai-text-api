@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from typing import Optional
 
 class TextRequest(BaseModel):
     text: str = Field(..., min_length=10, max_length=5000)
@@ -11,4 +12,4 @@ class QARequest(BaseModel):
 class ProcessRequest(BaseModel):
     input: str
     session_id: str
-    context: str
+    context: Optional[str] = None
