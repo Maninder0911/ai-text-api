@@ -9,7 +9,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="AI text-processign API")
+app = FastAPI(title="AI Job Assistant API")
 
 @app.post("/summarize")
 def summarize(req: TextRequest):
